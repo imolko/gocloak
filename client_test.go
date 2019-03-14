@@ -3,7 +3,7 @@ package gocloak
 import (
 	"crypto/tls"
 	"encoding/json"
-	"github.com/Nerzal/gocloak/pkg/jwx"
+	"github.com/imolko/gocloak/pkg/jwx"
 	"io/ioutil"
 	"math/rand"
 	"net/http"

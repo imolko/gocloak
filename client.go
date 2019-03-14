@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Nerzal/gocloak/pkg/jwx"
+	"github.com/imolko/gocloak/pkg/jwx"
 	"github.com/dgrijalva/jwt-go"
 	"gopkg.in/resty.v1"
 )
