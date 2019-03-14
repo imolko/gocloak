@@ -2,7 +2,6 @@ package gocloak
 
 import (
 	"encoding/json"
-	"strconv"
 )
 
 // BaseParams provides basic functionality for all QueryParams structures.
@@ -166,45 +165,26 @@ type UserGroup struct {
 type GetUsersParams struct {
 	BaseParams
 	BriefRepresentation *bool  `json:"briefRepresentation,string,omitempty"`
-	Email               string `json:"email,string,omitempty"`
+	Email               string `json:"email,omitempty"`
 	First               int    `json:"first,string,omitempty"`
-	FirstName           string `json:"firstName,string,omitempty"`
-	LastName            string `json:"lastName,string,omitempty"`
+	FirstName           string `json:"firstName,omitempty"`
+	LastName            string `json:"lastName,omitempty"`
 	Max                 int    `json:"max,string,omitempty"`
-	Search              string `json:"search,string,omitempty"`
-	Username            string `json:"username,string,omitempty"`
+	Search              string `json:"search,omitempty"`
+	Username            string `json:"username,omitempty"`
 }
 
 // GetQueryParams converts the struct to map[string]string
 func (s GetUsersParams) GetQueryParams() (map[string]string, error) {
-	var res = make(map[string]string)
-
-	if s.BriefRepresentation != nil && *s.BriefRepresentation {
-		res["briefRepresentation"] = "true"
+	b, err := json.Marshal(s)
+	if err != nil {
+		return nil, err
 	}
-
-	if s.Email != "" {
-		res["email"] = s.Email
+	var res map[string]string
+	err = json.Unmarshal(b, &res)
+	if err != nil {
+		return nil, err
 	}
-	if s.First != 0 {
-		res["first"] = strconv.FormatInt(int64(s.First), 10)
-	}
-	if s.FirstName != "" {
-		res["firstName"] = s.FirstName
-	}
-	if s.LastName != "" {
-		res["lastName"] = s.LastName
-	}
-	if s.Max != 0 {
-		res["max"] = strconv.FormatInt(int64(s.Max), 10)
-	}
-	if s.Search != "" {
-		res["search"] = s.Search
-	}
-	if s.Username != "" {
-		res["username"] = s.Username
-	}
-
 	return res, nil
 }
 
