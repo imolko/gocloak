@@ -179,14 +179,31 @@ type GetUsersParams struct {
 func (s GetUsersParams) GetQueryParams() (map[string]string, error) {
 	var res map[string]string
 
-	res["briefRepresentation"] = strconv.FormatBool(*s.BriefRepresentation)
-	res["email"] = s.Email
-	res["first"] = strconv.FormatInt(int64(s.First), 10)
-	res["firstName"] = s.FirstName
-	res["lastName"] = s.LastName
-	res["max"] = strconv.FormatInt(int64(s.Max), 10)
-	res["search"] = s.Search
-	res["username"] = s.Username
+	if s.BriefRepresentation != nil && *s.BriefRepresentation {
+		res["briefRepresentation"] = "true"
+	}
+
+	if s.Email != "" {
+		res["email"] = s.Email
+	}
+	if s.First != 0 {
+		res["first"] = strconv.FormatInt(int64(s.First), 10)
+	}
+	if s.FirstName != "" {
+		res["firstName"] = s.FirstName
+	}
+	if s.LastName != "" {
+		res["lastName"] = s.LastName
+	}
+	if s.Max != 0 {
+		res["max"] = strconv.FormatInt(int64(s.Max), 10)
+	}
+	if s.Search != "" {
+		res["search"] = s.Search
+	}
+	if s.Username != "" {
+		res["username"] = s.Username
+	}
 
 	return res, nil
 }
