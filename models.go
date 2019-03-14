@@ -1,6 +1,9 @@
 package gocloak
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strconv"
+)
 
 // BaseParams provides basic functionality for all QueryParams structures.
 // The fields tags must have `json:"<name>,string,omitempty"` format.
@@ -174,15 +177,17 @@ type GetUsersParams struct {
 
 // GetQueryParams converts the struct to map[string]string
 func (s GetUsersParams) GetQueryParams() (map[string]string, error) {
-	b, err := json.Marshal(s)
-	if err != nil {
-		return nil, err
-	}
 	var res map[string]string
-	err = json.Unmarshal(b, &res)
-	if err != nil {
-		return nil, err
-	}
+
+	res["briefRepresentation"] = strconv.FormatBool(*s.BriefRepresentation)
+	res["email"] = s.Email
+	res["first"] = strconv.FormatInt(int64(s.First), 10)
+	res["firstName"] = s.FirstName
+	res["lastName"] = s.LastName
+	res["max"] = strconv.FormatInt(int64(s.Max), 10)
+	res["search"] = s.Search
+	res["username"] = s.Username
+
 	return res, nil
 }
 
