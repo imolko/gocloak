@@ -177,7 +177,7 @@ type GetUsersParams struct {
 
 // GetQueryParams converts the struct to map[string]string
 func (s GetUsersParams) GetQueryParams() (map[string]string, error) {
-	var res map[string]string
+	var res = make(map[string]string)
 
 	if s.BriefRepresentation != nil && *s.BriefRepresentation {
 		res["briefRepresentation"] = "true"
