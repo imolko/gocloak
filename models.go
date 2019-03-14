@@ -172,6 +172,20 @@ type GetUsersParams struct {
 	Username            string `json:"username,string,omitempty"`
 }
 
+// GetQueryParams converts the struct to map[string]string
+func (s GetUsersParams) GetQueryParams() (map[string]string, error) {
+	b, err := json.Marshal(s)
+	if err != nil {
+		return nil, err
+	}
+	var res map[string]string
+	err = json.Unmarshal(b, &res)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
 // ExecuteActionsEmail represents parameters for executing action emails
 type ExecuteActionsEmail struct {
 	BaseParams
